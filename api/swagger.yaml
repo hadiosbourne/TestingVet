@@ -1,0 +1,38 @@
+swagger: "2.0"
+info:
+  description: "TestingVet API"
+  version: "1.0.0"
+  title: "TestingVet Service"
+host: "localhost:1000"
+basePath: "/v1"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+tags:
+- name: Status
+  description: "Status of this web service"
+paths:
+  /status:
+    get:
+      x-public-operation: true
+      x-swagger-router-controller: "StatusDetails"
+      operationId: "getSystemStatus"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "The server status will be returned"
+          schema:
+            $ref: "#/definitions/server_status_response"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/server_error_model"
+      tags:
+        - "Status"
+      summary: "Gets the status of the service"
