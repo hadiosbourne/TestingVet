@@ -3,7 +3,7 @@ info:
   description: "TestingVet API"
   version: "1.0.0"
   title: "TestingVet Service"
-host: "localhost:1000"
+host: "localhost:5000"
 basePath: "/v1"
 schemes:
 - "http"
@@ -17,13 +17,12 @@ tags:
 paths:
   /status:
     get:
-      x-public-operation: true
       x-swagger-router-controller: "StatusDetails"
       operationId: "getSystemStatus"
       consumes:
-        - "application/json"
+      - "application/json"
       produces:
-        - "application/json"
+      - "application/json"
       responses:
         200:
           description: "The server status will be returned"
@@ -34,5 +33,24 @@ paths:
           schema:
             $ref: "#/definitions/server_error_model"
       tags:
-        - "Status"
+      - "Status"
       summary: "Gets the status of the service"
+definitions:
+  server_error_model:
+    type: "object"
+    required:
+    - "message"
+    properties:
+      message:
+        type: "string"
+      exception:
+        $ref: "#/definitions/exception_model"
+  server_status_response:
+    type: "object"
+    required:
+    - "up_time"
+    properties:
+      up_time:
+        type: "integer"
+  exception_model:
+    type: "object"

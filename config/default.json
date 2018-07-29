@@ -1,0 +1,32 @@
+{
+  "server": {
+    "port": 5000
+  },
+  "client_errors": {
+    "400": {"error_code": null, "log_level": "notice"},
+    "404": {"error_code": "RESOURCE_NOT_FOUND", "log_level": "notice"},
+    "405": {"error_code": "METHOD_NOT_SUPPORTED", "log_level": "notice"},
+    "406": {"error_code": "CONTENT_TYPE_NOT_SUPPORTED", "log_level": "notice"}
+  },
+  "server_errors": [
+    500
+  ],
+  "logger": {
+    "stack": {
+      "app": "stencil"
+    },
+    "level": "info"
+  },
+  "bDebug": false,
+  "mongo": {
+    "database_host": "mongodb://localhost:27017/stencilDev",
+    "options": {
+      "config": {
+        "autoIndex": false
+      },
+      "useMongoClient": true
+    }
+  },
+  "api_token": "SomeSecret",
+  "swagger_ui_config": {}
+}
