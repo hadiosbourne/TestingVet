@@ -23,7 +23,6 @@ JWT examples to be used for testing for each role:
 `editor`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6ImVkaXRvciJ9.4aAvEm3UAcOGzNAVo1T_8L0tLg0MucpVwT1asgT9_kg`
 `reader`: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6InJlYWRlciJ9.WfTrq57uGJnZT870RRAgSZ68GKfdgR1eEfiAmBRuZ1s`
 
-
 Once our `JWTSecurityHelper` receives the JWT token, it uses the api_key defined in the config to decrypt the token and looks for the `role` property on it, and it will look through the `PermissionRoles` collection to find the list of accesses, and based on that each route will allow the user to use that specific route.
 
 
