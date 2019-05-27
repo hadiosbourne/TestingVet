@@ -1,7 +1,7 @@
 {
-  "name": "stencil",
-  "version": "1.0.1",
-  "description": "This is the templating for generic templating",
+  "name": "news",
+  "version": "1.0.0",
+  "description": "News Microservice",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -15,10 +15,6 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
-    "a24-logzio-winston": "git+ssh://git@github.com:A24Group/a24-logzio-winston.git#v1.3.1",
-    "a24-node-query-utils": "git+ssh://git@github.com:A24Group/a24-node-query-utils.git#v1.3.0",
-    "a24-node-error-utils": "git+ssh://git@github.com:A24Group/a24-node-error-utils.git#v2.0.2",
-    "a24-node-timezone-utils": "git+ssh://git@github.com:A24Group/a24-node-timezone-utils.git#v1.3.0",
     "request": "2.81.0",
     "swagger-tools": "0.10.1",
     "js-yaml": "3.3.0",
@@ -27,8 +23,8 @@
     "lodash": "4.17.4",
     "async": "2.3.0",
     "mongoose": "4.13.13",
-    "mongration": "git+ssh://git@github.com:A24Group/mongration.git#v0.1.2",
-    "jsonwebtoken": "^8.1.0"
+    "jsonwebtoken": "^8.1.0",
+    "node-migrate": "1.6.2"
   },
   "devDependencies": {
     "chai": "3.5.0",
@@ -42,7 +38,6 @@
     "xunit-file": "0.0.9",
     "json-schema-deref": "0.3.2",
     "supertest": "3.0.0",
-    "a24nodetestutils": "git+ssh://git@github.com:A24Group/A24NodeTestUtils.git#v1.1.0",
     "rewire": "2.5.2",
     "z-schema": "3.17.0",
     "superagent": "3.6.0"

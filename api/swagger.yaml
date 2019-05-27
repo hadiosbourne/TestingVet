@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "TestingVet API"
+  description: "News API"
   version: "1.0.0"
-  title: "TestingVet Service"
+  title: "News Service"
 host: "localhost:5000"
 basePath: "/v1"
 schemes:
@@ -14,6 +14,8 @@ produces:
 tags:
 - name: Status
   description: "Status of this web service"
+- name: NewsContent
+  description: "News content related routes"
 paths:
   /status:
     get:
@@ -35,6 +37,153 @@ paths:
       tags:
       - "Status"
       summary: "Gets the status of the service"
+  /news-content:
+    get:
+      parameters:
+        - $ref: "#/parameters/_id"
+        - $ref: "#/parameters/publishedAt"
+        - $ref: "#/parameters/source"
+        - $ref: "#/parameters/author"
+        - $ref: "#/parameters/category"
+        - $ref: "#/parameters/authorization"
+      security:
+        - jwt: []
+      x-swagger-router-controller: NewsContent
+      operationId: listNewsContents
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "All news contents will be returned"
+          headers:
+            link:
+              type: string
+            x-result-count:
+              type: integer
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/news_content_response_def"
+        204:
+          $ref: "#/responses/no_content"
+      tags:
+        - NewsContent
+      summary: Retrieves all news contents
+    post:
+      security:
+        - jwt: []
+      x-swagger-router-controller: NewsContent
+      operationId: postNewsContent
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/news_content_body_param"
+        - $ref: "#/parameters/authorization"
+      responses:
+        201:
+          description: "news content was created"
+          schema:
+            $ref: "#/definitions/news_content_response_def"
+      tags:
+        - NewsContent
+      summary: Creates the content of the news
+  /news-content/{news_id}:
+    parameters:
+      - $ref: "#/parameters/authorization"
+      - $ref: "#/parameters/news_id"
+    put:
+      x-swagger-router-controller: "NewsContent"
+      operationId: "putNewsContent"
+      security:
+        - jwt: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: "#/parameters/news_content_body_param"
+      responses:
+        200:
+          description: "The updated news content will be returned"
+          schema:
+            $ref: "#/definitions/news_content_response_def"
+      tags:
+        - NewsContent
+      summary: "Upsert a news content"
+    delete:
+      x-swagger-router-controller: "NewsContent"
+      operationId: "deleteNewsContent"
+      security:
+        - jwt: []
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "The deleted news content will be returned"
+          schema:
+            $ref: "#/definitions/news_content_response_def"
+      tags:
+        - NewsContent
+      summary: "deletes a news content"
+parameters:
+  news_id:
+    name: news_id
+    in: path
+    required: true
+    pattern: ^[0-9a-fA-F]{24}$
+    description: "The news id"
+    type: string
+  category:
+    name: category
+    in: query
+    description: "The category of the news"
+    type: string
+    enum:
+      - "sport"
+      - "weather"
+      - "politic"
+      - "social"
+      - "science"
+  _id:
+    name: _id
+    in: query
+    required: false
+    pattern: ^[0-9a-fA-F]{24}$
+    type: string
+  publishedAt:
+    name: publishedAt
+    in: query
+    format: date-time
+    required: false
+    type: string
+  source:
+    name: source
+    in: query
+    required: false
+    type: string
+  author:
+    name: author
+    in: query
+    required: false
+    type: string
+  news_content_body_param:
+    name: news_content
+    in: body
+    description: "The news content object"
+    schema:
+      $ref: "#/definitions/news_content_def"
+  authorization:
+    name: authorization
+    in: header
+    required: true
+    type: string
+    description: "The JWT Token"
 definitions:
   server_error_model:
     type: "object"
@@ -54,3 +203,45 @@ definitions:
         type: "integer"
   exception_model:
     type: "object"
+  news_content_def:
+    description: news content
+    type: object
+    required:
+      - category
+      - source
+      - url
+      - content
+    properties:
+      category:
+        type: string
+        enum:
+          - "sport"
+          - "weather"
+          - "politic"
+          - "social"
+          - "science"
+      source:
+        type: string
+      author:
+        type: string
+      title:
+        type: string     
+      description:
+        type: string
+      url:
+        type: string
+      publishedAt:
+        type: string
+        format: date-time
+      content:
+        type: string
+  news_content_response_def:
+    $ref: "#/definitions/news_content_def"
+responses:
+  no_content:
+    description: "No Content. There were no records to return based on your query."
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: authorization
+    in: header
